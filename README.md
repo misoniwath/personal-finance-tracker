@@ -13,7 +13,7 @@ Follow the steps below to set up and run the project locally.
 ```bash
 git clone https://github.com/misoniwath/personal-finance-tracker.git
 
-cd your-project-name
+cd personal-finance-tracker
 ```
 
 ### 2. Install Dependency
