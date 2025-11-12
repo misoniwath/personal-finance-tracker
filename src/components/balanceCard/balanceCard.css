@@ -1,0 +1,43 @@
+.balanceCards {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.balance-card {
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-radius: 20px;
+  border-left: 3px solid #00b300;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 250px;
+  text-align: left;
+}
+
+.amount-content {
+  width: 100%;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.income-icon {
+  color: #00b300;
+  font-size: 24px;
+}
+
+.amount-green {
+  font-size: 20px;
+  color: #00b300;
+  margin: 10px 0;
+}
+.amount-red {
+  font-size: 20px;
+  color: #ff0000;
+  margin: 10px 0;
+}
