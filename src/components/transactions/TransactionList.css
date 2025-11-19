@@ -1,0 +1,59 @@
+.transaction-list {
+  width: 100%;
+}
+
+.date-group {
+  margin-bottom: 20px;
+}
+
+.transaction-date {
+  font-size: 1.1rem;
+  color: #555;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 8px;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-name {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #333;
+}
+
+.transaction-note {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.right-column {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* Color coding for transaction type */
+.right-column.income {
+  color: #00b300; /* From your balanceCard.css */
+}
+
+.right-column.expense {
+  color: #ff0000; /* From your balanceCard.css */
+}
+
+.right-column.savings {
+  color: #007bff; /* Blue for savings */
+}

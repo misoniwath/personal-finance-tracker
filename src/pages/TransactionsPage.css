@@ -1,0 +1,46 @@
+/* src/pages/TransactionsPage.css */
+
+/* --- Main container for the whole page content --- */
+.transactions-page {
+  width: 100%;
+  max-width: 800px; /* Aligns with your overall app container */
+  margin-top: 20px;
+  background-color: #ffffff; /* White background for the main content area */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  box-sizing: border-box; /* Ensures padding is inside the max-width */
+}
+
+/* --- Header section for the title and the "Add" button --- */
+.transactions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0; /* Subtle separator */
+}
+
+.transactions-header h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+/* --- Style for the '+ Add Transaction' button --- */
+.add-txn-btn {
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #007bff; /* A clear, standard action color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.add-txn-btn:hover {
+  background-color: #0056b3;
+}
