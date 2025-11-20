@@ -1,4 +1,5 @@
 import { PieChart, Pie, Sector, Tooltip, ResponsiveContainer } from "recharts";
+import "./CategoryExpense.css";
 
 const data = [
   { name: "Food", value: 400 },
@@ -35,7 +36,7 @@ const renderActiveShape = (props) => {
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+      <text x={cx} y={cy} dy={6} textAnchor="middle" fill={fill}>
         {payload.name}
       </text>
       <Sector
@@ -68,7 +69,7 @@ const renderActiveShape = (props) => {
         textAnchor={textAnchor}
         fill="#333">{`$${value}`}</text>
       <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        x={ex + (cos >= 0 ? 1 : -1) * 2}
         y={ey}
         dy={18}
         textAnchor={textAnchor}
@@ -79,9 +80,9 @@ const renderActiveShape = (props) => {
 
 export function CustomActiveShapePieChart() {
   return (
-    <div style={{ width: "100%", height: 400 }}>
+    <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
-        <ul>
+        <ul className="category-list">
           {data.map((category, index) => (
             <li key={`item-${index}`}>{category.name}</li>
           ))}
@@ -91,9 +92,9 @@ export function CustomActiveShapePieChart() {
             activeShape={renderActiveShape}
             data={data}
             cx="50%"
-            cy="35%"
-            innerRadius={80}
-            outerRadius={120}
+            cy="50%"
+            innerRadius={60}
+            outerRadius={90}
             fill="#8884d8"
             dataKey="value"
           />

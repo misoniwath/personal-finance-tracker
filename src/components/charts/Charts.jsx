@@ -16,7 +16,6 @@ export function Charts() {
         <CustomActiveShapePieChart />
       </div>
       <div className="chart-card">
-        <h2>Saving Goals</h2>
         <SavingGoal />
       </div>
     </div>

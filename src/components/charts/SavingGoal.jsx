@@ -1,3 +1,4 @@
+import { GoGoal } from "react-icons/go";
 import "./SavingGoal.css";
 
 export function SavingGoal() {
@@ -9,7 +10,10 @@ export function SavingGoal() {
 
   return (
     <div>
+      <div className="goal-header"> 
       <h2>Saving Goals</h2>
+      <GoGoal className="goal-icon" />
+      </div>
 
       {goals.map((goal, index) => {
         const progress = (goal.saved / goal.target) * 100;
