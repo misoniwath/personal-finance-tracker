@@ -1,0 +1,48 @@
+.savings-page {
+  width: 100%;
+  max-width: 800px; 
+  margin-top: 20px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  box-sizing: border-box;
+}
+
+.savings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.savings-header h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.add-goal-btn {
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #007bff; /* Standard action color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.add-goal-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Container for the list of goal cards */
+.goals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
