@@ -91,7 +91,7 @@ export function CustomActiveShapePieChart() {
             activeShape={renderActiveShape}
             data={data}
             cx="50%"
-            cy="50%"
+            cy="35%"
             innerRadius={80}
             outerRadius={120}
             fill="#8884d8"

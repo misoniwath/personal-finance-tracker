@@ -1,0 +1,21 @@
+.progressBar {
+  width: 100%;
+  height: 10px;
+  background: #eee;
+  border-radius: 20px;
+  overflow: hidden; /* keeps the progress bar rounded */
+  margin: 10px 0;
+}
+
+.progress {
+  height: 100%;
+  background: #7c3aed; /* purple color */
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+
+.percentText {
+  font-size: 0.9rem;
+  color: #7c3aed;
+  font-weight: 500;
+}

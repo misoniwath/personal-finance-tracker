@@ -1,11 +1,11 @@
-import React from 'react';
-import './TransactionList.css';
+import React from "react";
+import "./TransactionList.css";
 
 //This handle displaying transaction date and formatted to YYYY-MM-DD
 
 // Helper function to format the date
 const formatDate = (dateString) => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const options = { year: "numeric", month: "long", day: "numeric" };
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
@@ -30,14 +30,16 @@ export function TransactionList({ transactions }) {
   }, {});
 
   // Get sorted dates
-  const sortedDates = Object.keys(groupedTransactions).sort((a, b) => new Date(b) - new Date(a));
+  const sortedDates = Object.keys(groupedTransactions).sort(
+    (a, b) => new Date(b) - new Date(a)
+  );
 
   return (
     <div className="transaction-list">
-      {sortedDates.map(date => (
+      {sortedDates.map((date) => (
         <div key={date} className="date-group">
           <h3 className="transaction-date">{formatDate(date)}</h3>
-          {groupedTransactions[date].map(txn => (
+          {groupedTransactions[date].map((txn) => (
             <div key={txn.id} className="transaction-item">
               <div className="left-column">
                 <span className="category-name">{txn.category}</span>
@@ -45,7 +47,7 @@ export function TransactionList({ transactions }) {
               </div>
               <div className={`right-column ${txn.type.toLowerCase()}`}>
                 {/* Show negative for expense, positive for others */}
-                {txn.type === 'Expense' ? '-' : '+'}
+                {txn.type === "Expense" ? "-" : "+"}
                 {formatCurrency(txn.amount)}
               </div>
             </div>

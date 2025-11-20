@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-export function BudgetPage() {
+export function Budget() {
   return (
     <div>
       <h2>Budget Page</h2>

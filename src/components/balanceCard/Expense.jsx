@@ -1,5 +1,5 @@
 import React from "react";
-import "./balanceCard.css";
+import "./Card.css";
 import { HiOutlineArrowCircleDown } from "react-icons/hi";
 import { HiOutlineArrowCircleUp } from "react-icons/hi";
 
