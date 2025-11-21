@@ -6,7 +6,7 @@ export function Setting() {
   const [settings, setSettings] = useState({
     currency: "$",
     theme: "light",
-    dateFormat: "DD-MM-YYYY", 
+    dateFormat: "MM/DD/YYYY", 
   });
 
   const [saveMessage, setSaveMessage] = useState("");
@@ -33,7 +33,7 @@ export function Setting() {
     setSettings({
       currency: "$",
       theme: "light",
-      dateFormat: "DD-MM-YYYY",
+      dateFormat: "MM/DD/YYYY",
     });
     
     setSaveMessage({ text: "Settings restored to default.", type: "neutral" });

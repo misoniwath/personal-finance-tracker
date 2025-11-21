@@ -29,9 +29,9 @@ export function SettingsOptions({ settings, onChange }) {
       <div className="settings-field">
         <label>Date Format</label>
         <select name="dateFormat" value={settings.dateFormat} onChange={onChange}>
-          <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-          <option value="DD-MM-YYYY">DD-MM-YYYY</option>
-          <option value="MM-DD-YYYY">MM-DD-YYYY</option>
+          <option value="YYYY/MM/DD">YYYY/MM/DD</option>
+          <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+          <option value="MM/DD/YYYY">MM/DD/YYYY</option>
         </select>
       </div>
     </div>
