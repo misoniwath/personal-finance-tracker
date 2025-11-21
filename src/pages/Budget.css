@@ -1,0 +1,43 @@
+.budget-page {
+  width: 100%;
+  max-width: 900px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+
+.budget-header {
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 15px;
+}
+
+.budget-header h2 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.8rem;
+}
+
+.budget-header .subtitle {
+  margin: 5px 0 0 0;
+  color: #777;
+  font-size: 0.95rem;
+}
+
+/* The Grid Layout for Budget Cards */
+.budget-grid {
+  display: grid;
+  /* Creates columns that are at least 300px wide, fitting as many as possible */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Responsive adjustment for very small screens */
+@media (max-width: 640px) {
+  .budget-page {
+    padding: 20px 15px;
+  }
+}

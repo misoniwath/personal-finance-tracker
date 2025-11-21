@@ -1,0 +1,77 @@
+/*  for the goal progress card container */
+.goalItem-card {
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #7c3aed; /* Accent color */
+}
+
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.goal-title {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.goal-info {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 0 0 15px 0;
+}
+
+.goal-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.due-date {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Action buttons */
+.goal-actions .icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-left: 10px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.goal-actions .icon-btn:hover {
+  opacity: 1;
+}
+
+
+.progressBar {
+  width: 100%;
+  height: 10px;
+  background: #eee;
+  border-radius: 20px;
+  overflow: hidden; 
+  margin: 10px 0;
+}
+
+.progress {
+  height: 100%;
+  background: #7c3aed; /* purple color */
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+
+.percentText {
+  font-size: 0.9rem;
+  color: #7c3aed;
+  font-weight: 500;
+}

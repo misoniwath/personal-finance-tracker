@@ -1,0 +1,46 @@
+.budget-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-radius: 12px; /* Smooth rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.budget-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.budget-card-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.budget-amount {
+  margin: 0;
+  color: #444;
+  font-size: 1rem;
+}
+
+.edit-icon-btn {
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.edit-icon-btn:hover {
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
