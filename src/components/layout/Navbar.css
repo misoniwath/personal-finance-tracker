@@ -50,7 +50,25 @@
   box-shadow: 0 3px 8px rgba(79, 70, 229, 0.35);
   transition: all 0.25s ease-in-out;
 }
+/* DARK MODE */
+body.dark-mode .navBar {
+  background: #1e1e1e;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
 
+body.dark-mode .tabLink {
+  color: #e0e0e0;
+}
+
+body.dark-mode .tabLink:hover {
+  color: #c7d2fe;
+  background: #111827;
+}
+
+body.dark-mode .tabLinkActive {
+  background: #6366f1;
+  box-shadow: 0 3px 8px rgba(129, 140, 248, 0.35);
+}
 /* RESPONSIVE MOBILE */
 @media (max-width: 768px) {
   .navLinks {

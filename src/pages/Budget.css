@@ -35,6 +35,24 @@
   gap: 20px;
 }
 
+/* Dark mode */
+body.dark-mode .budget-page {
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.06);
+}
+
+body.dark-mode .budget-header {
+  border-bottom: 2px solid #333;
+}
+
+body.dark-mode .budget-header h2 {
+  color: #f9fafb;
+}
+
+body.dark-mode .budget-header .subtitle {
+  color: #cbd5f5;
+}
+
 /* Responsive adjustment for very small screens */
 @media (max-width: 640px) {
   .budget-page {

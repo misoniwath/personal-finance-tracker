@@ -81,3 +81,51 @@
     background-color: #28a745; 
     color: white;
 }
+
+/* 🌙 Dark mode */
+body.dark-mode .modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+body.dark-mode .modal-content {
+  background: #1b1b1b;
+  color: #e5e7eb;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+}
+
+body.dark-mode .modal-content h2 {
+  color: #f9fafb;
+}
+
+body.dark-mode .form-group label {
+  color: #e5e7eb;
+}
+
+body.dark-mode .form-group input {
+  background-color: #2a2a2b;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+body.dark-mode .form-group input::placeholder {
+  color: #6b7280;
+}
+
+body.dark-mode .btn-cancel {
+  background-color: #374151;
+  color: #e5e7eb;
+}
+
+body.dark-mode .btn-cancel:hover {
+  background-color: #4b5563;
+}
+
+body.dark-mode .btn-add {
+  background-color: #374151;
+  color: #e5e7eb;
+}
+
+body.dark-mode .btn-add:hover {
+  background-color: #16a34a;
+}
+

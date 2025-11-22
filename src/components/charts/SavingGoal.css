@@ -30,3 +30,19 @@
   color: #7c3aed;
   font-weight: 500;
 }
+/* Dark Mode Support */
+body.dark-mode .goal-icon {
+  color: #c4b5fd; /* Soft purple */
+}
+
+body.dark-mode .progressBar {
+  background: #374151; /* Dark gray bar BG */
+}
+
+body.dark-mode .progress {
+  background: #a78bfa; /* Brighter purple for visibility */
+}
+
+body.dark-mode .percentText {
+  color: #d8b4fe;
+}
