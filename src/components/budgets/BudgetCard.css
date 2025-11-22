@@ -44,3 +44,27 @@
   background-color: rgba(255, 255, 255, 1);
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+/* Dark mode */
+body.dark-mode .budget-card {
+  background-color: #232424 !important;  
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  color: #e5e7eb;
+}
+
+body.dark-mode .budget-card h3 {
+  color: #f9fafb;
+}
+
+body.dark-mode .budget-amount {
+  color: #9ca3af;
+}
+
+body.dark-mode .edit-icon-btn {
+  background-color: #374151;
+  color: #facc15;
+}
+
+body.dark-mode .edit-icon-btn:hover {
+  background-color: #4b5563;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+}

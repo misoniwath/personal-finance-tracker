@@ -75,3 +75,35 @@
   color: #7c3aed;
   font-weight: 500;
 }
+
+/* 🌙 Dark Mode Support */
+body.dark-mode .goalItem-card {
+  background-color: #1e1e1e;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
+  color: #e5e7eb;
+}
+
+body.dark-mode .goal-title {
+  color: #f3f4f6;
+}
+
+body.dark-mode .goal-info,
+body.dark-mode .due-date {
+  color: #cbd5e1;
+}
+
+body.dark-mode .progressBar {
+  background: #374151;
+}
+
+body.dark-mode .progress {
+  background: #8b5cf6; 
+}
+
+body.dark-mode .percentText {
+  color: #c4b5fd;
+}
+
+body.dark-mode .icon-btn {
+  color: #e5e7eb;
+}

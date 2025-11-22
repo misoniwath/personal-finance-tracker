@@ -8,6 +8,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import "./StackedBarChart.css";
 
 const data = [
   { name: "Jan", income: 4000, expense: 2400 },
@@ -21,11 +22,12 @@ const data = [
 
 export function StackedBarChart() {
   return (
-    <div style={{ width: "100%", height: 400 }}>
+    <div className="stacked-bar-wrapper" style={{ width: "100%", height: 400 }}>
       <ResponsiveContainer width="100%" height={400}>
         <BarChart
           data={data}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+        >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />

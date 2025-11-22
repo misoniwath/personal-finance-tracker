@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SettingsOptions } from "../components/setting/SettingsOptions";
 import "./Setting.css";
 
@@ -8,6 +8,15 @@ export function Setting() {
     theme: "light",
     dateFormat: "MM/DD/YYYY", 
   });
+  
+  // apply theme to body
+  useEffect(() => {
+    if (settings.theme === "dark") {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, [settings.theme]);
 
   const [saveMessage, setSaveMessage] = useState("");
   
