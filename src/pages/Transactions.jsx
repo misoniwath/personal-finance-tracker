@@ -1,48 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { AddTransactionModal } from "../components/transactions/AddTransactionModal";
 import { TransactionList } from "../components/transactions/TransactionList";
+import { TransactionContext } from "../context/TransactionContext";
 import "./Transactions.css";
 
 export function Transactions() {
   // useState hook to manage if the modal is open or closed
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // This data will eventually come from your React Context (Member 2's job)
-  // For now, we use mock data to build the UI.
-  const [transactions, setTransactions] = useState([
-    {
-      id: 1,
-      type: "Income",
-      category: "Salary",
-      date: "2025-11-15",
-      amount: 2500,
-      note: "Monthly Pay",
-    },
-    {
-      id: 2,
-      type: "Expense",
-      category: "Food",
-      date: "2025-11-14",
-      amount: 50.75,
-      note: "Groceries",
-    },
-    {
-      id: 3,
-      type: "Savings",
-      category: "Vacation Fund",
-      date: "2025-11-13",
-      amount: 200,
-      note: "January Trip",
-    },
-  ]);
+  // Access global state and dispatch from Context
+  const { state, dispatch } = useContext(TransactionContext);
+  const { transactions } = state;
 
   // Function to add a new transaction (will be passed to the modal)
   const handleAddTransaction = (newTransaction) => {
-    // We add the new transaction to the top of the list
-    setTransactions((prevTransactions) => [
-      { ...newTransaction, id: Date.now() }, // Add a unique ID
-      ...prevTransactions,
-    ]);
+    const transactionWithId = { ...newTransaction, id: Date.now() };
+
+    dispatch({
+      type: "ADD_TRANSACTION",
+      payload: transactionWithId,
+    });
+
     setIsModalOpen(false); // Close the modal after adding
   };
 

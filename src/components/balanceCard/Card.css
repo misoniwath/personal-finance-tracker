@@ -3,10 +3,12 @@
   justify-content: space-between;
   background-color: #ffffff;
   border-radius: 20px;
-  border-left: 3px solid #00b300;
+  border-left: 4px solid #00b300;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 15px;
+  margin-bottom: 0;
   width: 200px;
+  height: 150px;
   text-align: left;
 }
 
@@ -16,8 +18,10 @@
 
 .title-row {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  padding-top:0 ;
+  margin: 0;
+  border: none;
 }
 
 .income-icon {
@@ -28,7 +32,7 @@
 .amount-green {
   font-size: 20px;
   color: #00b300;
-  margin: 10px 0;
+  margin: 0;
 }
 .amount-red {
   font-size: 20px;

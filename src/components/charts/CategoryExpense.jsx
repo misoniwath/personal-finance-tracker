@@ -1,12 +1,8 @@
 import { PieChart, Pie, Sector, Tooltip, ResponsiveContainer } from "recharts";
 import "./CategoryExpense.css";
+import { TransactionContext } from "../../context/TransactionContext";
+import { useContext, useState } from "react";
 
-const data = [
-  { name: "Food", value: 400 },
-  { name: "Rent", value: 300 },
-  { name: "Shopping", value: 300 },
-  { name: "Transport", value: 200 },
-];
 
 const renderActiveShape = (props) => {
   const {
@@ -36,7 +32,7 @@ const renderActiveShape = (props) => {
 
   return (
     <g>
-      <text x={cx} y={cy} dy={6} textAnchor="middle" fill={fill}>
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
         {payload.name}
       </text>
       <Sector
@@ -67,9 +63,9 @@ const renderActiveShape = (props) => {
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         textAnchor={textAnchor}
-        fill="#333">{`$${value}`}</text>
+        fill="#333">{`$${value.toFixed(2)}`}</text>
       <text
-        x={ex + (cos >= 0 ? 1 : -1) * 2}
+        x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         dy={18}
         textAnchor={textAnchor}
@@ -79,26 +75,53 @@ const renderActiveShape = (props) => {
 };
 
 export function CustomActiveShapePieChart() {
+  const { state } = useContext(TransactionContext);
+  const { transactions } = state;
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Process transactions to get expense data by category
+  const expenseTransactions = transactions.filter((t) => t.type === "Expense");
+
+  const categoryTotals = expenseTransactions.reduce((acc, t) => {
+    const amount = Number(t.amount);
+    if (acc[t.category]) {
+      acc[t.category] += amount;
+    } else {
+      acc[t.category] = amount;
+    }
+    return acc;
+  }, {});
+
+  const data = Object.keys(categoryTotals).map((category) => ({
+    name: category,
+    value: categoryTotals[category],
+  }));
+
+  // Handle case with no data to avoid errors
+  if (data.length === 0) {
+    return <div className="no-data">No expense data to display</div>;
+  }
+
+  const onPieEnter = (_, index) => {
+    setActiveIndex(index);
+  };
+
   return (
     <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
-        <ul className="category-list">
-          {data.map((category, index) => (
-            <li key={`item-${index}`}>{category.name}</li>
-          ))}
-        </ul>
         <PieChart>
           <Pie
+            activeIndex={activeIndex}
             activeShape={renderActiveShape}
             data={data}
             cx="50%"
             cy="50%"
             innerRadius={60}
-            outerRadius={90}
+            outerRadius={80}
             fill="#8884d8"
             dataKey="value"
+            onMouseEnter={onPieEnter}
           />
-          <Tooltip />
         </PieChart>
       </ResponsiveContainer>
     </div>

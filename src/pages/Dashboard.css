@@ -1,5 +1,9 @@
+/* .dashboardContainer {
+  
+} */
 .balanceCards {
   display: flex;
+  justify-content: space-around;
   gap: 20px;
   margin-top: 20px;
 }
