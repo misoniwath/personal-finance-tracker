@@ -8,26 +8,29 @@ import { Budget } from "./pages/Budget";
 import { Savings } from "./pages/Saving";
 import { NotFound } from "./pages/NotFound";
 import { Setting } from "./pages/Setting";
+import { TransactionProvider } from "./context/TransactionContext";
 
 function App() {
   return (
-    <div className="container">
-      <h1 className="header">Personal Finance Tracker</h1>
-      <Router>
-        <NavBar />
+    <TransactionProvider>
+      <div className="container">
+        <h1 className="header">Personal Finance Tracker</h1>
+        <Router>
+          <NavBar />
 
-        <Routes>
-          {/* Define your routes here */}
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="/budget" element={<Budget />} />
-          <Route path="/savings" element={<Savings />} />
-          <Route path="/setting" element={<Setting />} />
+          <Routes>
+            {/* Define your routes here */}
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/transactions" element={<Transactions />} />
+            <Route path="/budget" element={<Budget />} />
+            <Route path="/savings" element={<Savings />} />
+            <Route path="/setting" element={<Setting />} />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
-    </div>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </div>
+    </TransactionProvider>
   );
 }
 

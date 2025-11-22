@@ -48,7 +48,7 @@ export function NavBar() {
             className={({ isActive }) =>
               isActive ? "tabLinkActive" : "tabLink"
             }>
-            Setting
+            Settings
           </NavLink>
         </li>
       </ul>
