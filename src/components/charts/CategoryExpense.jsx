@@ -53,23 +53,21 @@ const renderActiveShape = (props) => {
         outerRadius={outerRadius + 10}
         fill={fill}
       />
-      <path
-        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
-        stroke={fill}
-        fill="none"
-      />
+      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         textAnchor={textAnchor}
-        fill="#333">{`$${value.toFixed(2)}`}</text>
+        fill="#8884d8"
+      >{`$${value.toFixed(2)}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         dy={18}
         textAnchor={textAnchor}
-        fill="#999">{`(${(percent * 100).toFixed(2)}%)`}</text>
+        fill="#999"
+      >{`(${(percent * 100).toFixed(2)}%)`}</text>
     </g>
   );
 };
@@ -79,10 +77,56 @@ export function CustomActiveShapePieChart() {
   const { transactions } = state;
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Process transactions to get expense data by category
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
+
   const expenseTransactions = transactions.filter((t) => t.type === "Expense");
 
-  const categoryTotals = expenseTransactions.reduce((acc, t) => {
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  const availableMonths = Array.from(
+    new Set(
+      expenseTransactions
+        .map((t) => {
+          if (!t.date) return null;
+          const d = new Date(t.date);
+          if (isNaN(d.getTime())) return null;
+          return d.getMonth();
+        })
+        .filter((m) => m !== null)
+    )
+  ).sort((a, b) => a - b);
+
+  const availableYears = Array.from(
+    new Set(
+      expenseTransactions
+        .map((t) => {
+          if (!t.date) return null;
+          const d = new Date(t.date);
+          if (isNaN(d.getTime())) return null;
+          return d.getFullYear();
+        })
+        .filter((y) => y !== null)
+    )
+  ).sort((a, b) => a - b);
+
+  const filteredExpenseTransactions = expenseTransactions.filter((t) => {
+    if (!t.date) return false;
+    const d = new Date(t.date);
+    if (isNaN(d.getTime())) return false;
+
+    const monthMatch =
+      selectedMonth === "" || d.getMonth().toString() === selectedMonth;
+    const yearMatch =
+      selectedYear === "" || d.getFullYear().toString() === selectedYear;
+
+    return monthMatch && yearMatch;
+  });
+
+  const categoryTotals = filteredExpenseTransactions.reduce((acc, t) => {
     const amount = Number(t.amount);
     if (acc[t.category]) {
       acc[t.category] += amount;
@@ -97,17 +141,87 @@ export function CustomActiveShapePieChart() {
     value: categoryTotals[category],
   }));
 
-  // Handle case with no data to avoid errors
-  if (data.length === 0) {
-    return <div className="no-data">No expense data to display</div>;
-  }
-
   const onPieEnter = (_, index) => {
     setActiveIndex(index);
   };
 
+  const handleResetFilters = () => {
+    setSelectedMonth("");
+    setSelectedYear("");
+  };
+
+  if (data.length === 0) {
+    return (
+      <div style={{ width: "100%", height: 300 }}>
+        <div className="category-expense-filters">
+          <select
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+          >
+            <option value="">All Months</option>
+            {availableMonths.map((m) => (
+              <option key={m} value={m.toString()}>
+                {monthNames[m]}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+          >
+            <option value="">All Years</option>
+            {availableYears.map((y) => (
+              <option key={y} value={y.toString()}>
+                {y}
+              </option>
+            ))}
+          </select>
+
+          <button type="button" onClick={handleResetFilters}>
+            Reset
+          </button>
+        </div>
+
+        <div className="no-data">
+          No expense data to display for the selected period
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ width: "100%", height: 300 }}>
+      <div className="category-expense-filters">
+        <select
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+        >
+          <option value="">All Months</option>
+          {availableMonths.map((m) => (
+            <option key={m} value={m.toString()}>
+              {monthNames[m]}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+        >
+          <option value="">All Years</option>
+          {availableYears.map((y) => (
+            <option key={y} value={y.toString()}>
+              {y}
+            </option>
+          ))}
+        </select>
+
+        <button type="button" onClick={handleResetFilters}>
+          Reset
+        </button>
+      </div>
+
       <ResponsiveContainer>
         <PieChart>
           <Pie

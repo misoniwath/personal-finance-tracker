@@ -26,8 +26,14 @@
 .category-list li:hover {
   color: #111827; 
 }
+.category-expense-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  align-items: center;
+}
 
-/* ---------- DARK MODE ---------- */
+/* DARK MODE */
 
 body.dark-mode .category-list {
   color: #e5e7eb; 
