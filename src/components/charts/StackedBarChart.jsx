@@ -1,3 +1,4 @@
+import React, { useState, useMemo } from "react";
 import {
   BarChart,
   Bar,
@@ -8,6 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import "./StackedBarChart.css";
 
 const data = [
   { name: "Jan", income: 4000, expense: 2400 },
@@ -20,19 +22,47 @@ const data = [
 ];
 
 export function StackedBarChart() {
+  const [filter, setFilter] = useState("all"); 
+
+  // Filter logic
+  const filteredData = useMemo(() => {
+    return data.map((item) => {
+      if (filter === "income") return { name: item.name, income: item.income };
+      if (filter === "expense") return { name: item.name, expense: item.expense };
+      return item; 
+    });
+  }, [filter]);
+
   return (
-    <div style={{ width: "100%", height: 400 }}>
-      <ResponsiveContainer width="100%" height={400}>
+    <div className="stacked-bar-wrapper" style={{ width: "100%", height: 400 }}>
+      {/* Filter Control */}
+      <div style={{ marginBottom: "10px" }}>
+        <label>Show: </label>
+        <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+          <option value="all">All (Income + Expense)</option>
+          <option value="income">Income Only</option>
+          <option value="expense">Expense Only</option>
+        </select>
+      </div>
+
+      <ResponsiveContainer width="100%" height={380}>
         <BarChart
-          data={data}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+          data={filteredData}
+          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+        >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="expense" stackId="a" fill="#8884d8" />
-          <Bar dataKey="income" stackId="a" fill="#82ca9d" />
+
+          {(filter === "all" || filter === "expense") && (
+            <Bar dataKey="expense" stackId="a" fill="#8884d8" />
+          )}
+
+          {(filter === "all" || filter === "income") && (
+            <Bar dataKey="income" stackId="a" fill="#82ca9d" />
+          )}
         </BarChart>
       </ResponsiveContainer>
     </div>

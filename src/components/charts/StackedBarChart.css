@@ -1,0 +1,38 @@
+
+.stacked-bar-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+/* Dark mode for the stacked bar chart */
+
+body.dark-mode .stacked-bar-wrapper .recharts-cartesian-axis-tick text,
+body.dark-mode .stacked-bar-wrapper .recharts-cartesian-axis-label,
+body.dark-mode .stacked-bar-wrapper .recharts-text {
+  fill: #e5e7eb; 
+}
+
+
+body.dark-mode .stacked-bar-wrapper .recharts-cartesian-grid line {
+  stroke: #374151; 
+}
+
+
+body.dark-mode .stacked-bar-wrapper .recharts-legend-item-text {
+  color: #e5e7eb !important;
+}
+
+
+body.dark-mode .stacked-bar-wrapper .recharts-default-tooltip {
+  background-color: #020617 !important;
+  border-radius: 8px !important;
+  border: 1px solid #374151 !important;
+  color: #f9fafb !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
+}
+
+
+body.dark-mode .stacked-bar-wrapper .recharts-tooltip-label,
+body.dark-mode .stacked-bar-wrapper .recharts-tooltip-item {
+  color: #e5e7eb !important;
+}

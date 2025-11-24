@@ -1,0 +1,54 @@
+.settings-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.settings-options h3 {
+  font-size: 1.2rem;
+  color: #777;
+  margin: 0;
+}
+
+.settings-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-field label {
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #2c3e50;
+}
+
+.settings-field select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.settings-field select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+body.dark-mode .settings-options h3 {
+  color: #d1d5db;
+}
+
+body.dark-mode .settings-field label {
+  color: #e5e7eb;
+}
+
+body.dark-mode .settings-field select {
+  background-color: #1a1a1a;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+body.dark-mode .settings-field select:focus {
+  border-color: #2563eb;
+}

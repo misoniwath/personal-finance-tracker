@@ -1,3 +1,4 @@
+
 .no-data {
   color: #888;
   font-size: 1rem;
@@ -6,4 +7,56 @@
 }
 .category-list {
   margin-top: 10px;
+  list-style: disc;
+  margin: 0 0 12px 20px;
+  padding: 0;
+  color: #374151; 
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.category-list li {
+  cursor: default;
+  transition: color 0.2s ease;
+}
+
+
+.category-list li:hover {
+  color: #111827; 
+}
+.category-expense-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+/* DARK MODE */
+
+body.dark-mode .category-list {
+  color: #e5e7eb; 
+}
+
+body.dark-mode .category-list li {
+  cursor: pointer;
+}
+
+
+body.dark-mode .category-list li:hover {
+  color: #f9fafb;           
+}
+
+body.dark-mode .recharts-default-tooltip {
+  background-color: #020617 !important;
+  border-radius: 8px !important;
+  border: 1px solid #374151 !important;
+  color: #f9fafb !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
+}
+
+body.dark-mode .recharts-tooltip-label,
+body.dark-mode .recharts-tooltip-item {
+  color: #e5e7eb !important;
 }
