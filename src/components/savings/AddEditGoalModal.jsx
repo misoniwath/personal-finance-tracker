@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./AddEditGoalModal.css"; // New CSS file
 
 // Helper to get today's date in YYYY-MM-DD format
@@ -31,7 +31,7 @@ export function AddEditGoalModal({ onClose, onSave, goalToEdit }) {
       name: title,
       target: parseFloat(targetAmount),
       dueDate,
-      saved: isEdit ? goalToEdit.saved : parseFloat(savedAmount),
+      saved: parseFloat(savedAmount) || 0,
     };
 
     onSave(goalData);
@@ -72,19 +72,21 @@ export function AddEditGoalModal({ onClose, onSave, goalToEdit }) {
           </div>
 
           {!isEdit && ( // Only show "Currently Saved" for new goals
-            <div className="form-group">
-              <label htmlFor="savedAmount">Currently Saved ($)</label>
-              <input
-                id="savedAmount"
-                type="number"
-                min="0.00"
-                step="0.01"
-                placeholder="0.00"
-                value={savedAmount}
-                onChange={(e) => setSavedAmount(e.target.value)}
-              />
-            </div>
+            <></>
           )}
+
+          <div className="form-group">
+            <label htmlFor="savedAmount">Currently Saved ($)</label>
+            <input
+              id="savedAmount"
+              type="number"
+              min="0.00"
+              step="0.01"
+              placeholder="0.00"
+              value={savedAmount}
+              onChange={(e) => setSavedAmount(e.target.value)}
+            />
+          </div>
 
           <div className="form-group">
             <label htmlFor="dueDate">Due Date</label>
