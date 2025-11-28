@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import "./Card.css";
 import { TransactionContext } from "../../context/TransactionContext";
+import { SettingsContext } from "../../context/SettingsContext";
 
 export function Balance({ type, icon }) {
   const { state } = useContext(TransactionContext);
   const { transactions } = state;
+  const { settings } = useContext(SettingsContext);
 
   // Calculate amount and count based on type
   let displayAmount = 0;
@@ -38,7 +40,9 @@ export function Balance({ type, icon }) {
           <h3>{type}</h3>
           <p className="income-icon">{icon}</p>
         </div>
-        <p className="amount-green">${displayAmount.toFixed(2)}</p>
+        <p className="amount-green">
+          {settings.currency} {displayAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+        </p>
         <p>
           {displayCount} {type} transactions
         </p>

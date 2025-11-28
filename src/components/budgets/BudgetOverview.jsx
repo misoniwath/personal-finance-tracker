@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './BudgetOverview.css';
+import { SettingsContext } from '../../context/SettingsContext';
 
 // Utility function to format numbers to currency
-const format = (n) => `$${n.toFixed(2)}`;
+const format = (n, currency) => `${currency}${n.toFixed(2)}`;
 
-export function BudgetOverview({ budgets  }) {
+export function BudgetOverview({ budgets }) {
+  const { settings } = useContext(SettingsContext);
+
   return (
     // The main container for the overview section
     // NOTE: The class name 'overview-container' is used in BudgetOverview.css
@@ -22,7 +25,7 @@ export function BudgetOverview({ budgets  }) {
               {/* Top line: Category Name vs. Amounts */}
               <div className="overview-top">
                 <span style={{ color: b.color, fontWeight: '600' }}>{b.category}</span>
-                <span>{format(b.spent)} / {format(b.amount)}</span>
+                <span>{format(b.spent, settings.currency)} / {format(b.amount, settings.currency)}</span>
               </div>
 
               {/* Progress Bar Background */}
@@ -32,7 +35,6 @@ export function BudgetOverview({ budgets  }) {
                   className="bar-fill" 
                   style={{ 
                     width: `${pct}%`, 
-                    // Use red (#ef4444 is a good Tailwind red) if overspent
                     backgroundColor: b.spent > b.amount ? '#ef4444' : b.color 
                   }} 
                   aria-label={`${b.category} budget usage: ${pct.toFixed(0)}%`} 
