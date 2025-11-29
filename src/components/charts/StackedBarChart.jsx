@@ -11,29 +11,57 @@ import {
 } from "recharts";
 import "./StackedBarChart.css";
 import { SettingsContext } from "../../context/SettingsContext";
+import { TransactionContext } from "../../context/TransactionContext";
 
-const data = [
-  { name: "Jan", income: 4000, expense: 2400 },
-  { name: "Feb", income: 3000, expense: 1398 },
-  { name: "Mar", income: 2000, expense: 9800 },
-  { name: "Apr", income: 2780, expense: 3908 },
-  { name: "May", income: 1890, expense: 4800 },
-  { name: "Jun", income: 2390, expense: 3800 },
-  { name: "Jul", income: 3490, expense: 4300 },
+const monthNames = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
 
 export function StackedBarChart() {
   const [filter, setFilter] = useState("all"); 
   const { settings } = useContext(SettingsContext);
+  const { state } = useContext(TransactionContext);
+  const { transactions } = state;
+
+  // Process transactions to group by month
+  const chartData = useMemo(() => {
+    // Initialize all months with 0 income and expense
+    const monthlyData = {};
+    
+    // Initialize all 12 months
+    for (let i = 0; i < 12; i++) {
+      monthlyData[i] = { name: monthNames[i], income: 0, expense: 0 };
+    }
+
+    // Process transactions
+    transactions.forEach((txn) => {
+      if (!txn.date) return;
+      const date = new Date(txn.date);
+      if (isNaN(date.getTime())) return;
+      
+      const month = date.getMonth();
+      const amount = Number(txn.amount);
+
+      if (txn.type === "Income") {
+        monthlyData[month].income += amount;
+      } else if (txn.type === "Expense") {
+        monthlyData[month].expense += amount;
+      }
+    });
+
+    // Convert to array and filter out months with no data (optional - you can show all months)
+    return Object.values(monthlyData);
+  }, [transactions]);
 
   // Filter logic
   const filteredData = useMemo(() => {
-    return data.map((item) => {
+    return chartData.map((item) => {
       if (filter === "income") return { name: item.name, income: item.income };
       if (filter === "expense") return { name: item.name, expense: item.expense };
       return item;
     });
-  }, [filter]);
+  }, [filter, chartData]);
 
   const formatCurrency = (value) => {
     return `${settings.currency}${value.toLocaleString(undefined, {

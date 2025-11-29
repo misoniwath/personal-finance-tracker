@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './AddTransactionModal.css';
+import { TransactionContext } from '../../context/TransactionContext';
 
 
 //This file capturing the date when a user adds a new transaction using getTodayDate
-
-// Define categories for each type
-const categories = {
-  Income: ['Salary', 'Freelance', 'Investment', 'Other'],
-  Expense: ['Food', 'Rent', 'Shopping', 'Transport', 'Utilities', 'Other'],
-  Savings: ['Vacation Fund', 'Emergency Fund', 'Retirement', 'Other'],
-};
 
 // Get today's date in YYYY-MM-DD format for the input's max attribute
 const getTodayDate = () => {
@@ -18,21 +12,24 @@ const getTodayDate = () => {
 };
 
 export function AddTransactionModal({ onClose, onAddTransaction }) {
+  const { state } = useContext(TransactionContext);
+  const { savingGoals } = state;
+
   // State for the form fields
   const [type, setType] = useState('Expense'); // Default to 'Expense'
-  const [category, setCategory] = useState(categories.Expense[0]); // Default to first expense category
+  const [category, setCategory] = useState(''); // For Income and Expense, this will be text input
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState(getTodayDate());
   const [note, setNote] = useState('');
 
-  // State for the dynamic category list
-  const [currentCategories, setCurrentCategories] = useState(categories.Expense);
-
-  // useEffect hook to update categories when 'type' changes
+  // useEffect hook to reset category when 'type' changes
   useEffect(() => {
-    setCurrentCategories(categories[type]); // Update the category list
-    setCategory(categories[type][0]); // Reset to the first category in the new list
-  }, [type]); // This effect runs whenever 'type' changes
+    setCategory(''); // Reset category when type changes
+    // If Savings type and there are saving goals, set to first goal name
+    if (type === 'Savings' && savingGoals.length > 0) {
+      setCategory(savingGoals[0].name);
+    }
+  }, [type, savingGoals]); // This effect runs whenever 'type' or 'savingGoals' changes
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent page from reloading
@@ -89,15 +86,31 @@ export function AddTransactionModal({ onClose, onAddTransaction }) {
           
           <div className="form-group">
             <label htmlFor="category">Category</label>
-            <select
-              id="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              {currentCategories.map(cat => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
-            </select>
+            {type === 'Savings' ? (
+              <select
+                id="category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                required
+              >
+                {savingGoals.length > 0 ? (
+                  savingGoals.map(goal => (
+                    <option key={goal.id} value={goal.name}>{goal.name}</option>
+                  ))
+                ) : (
+                  <option value="">No saving goals available</option>
+                )}
+              </select>
+            ) : (
+              <input
+                id="category"
+                type="text"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                placeholder={type === 'Income' ? 'e.g., Salary, Freelance' : 'e.g., Food, Transport'}
+                required
+              />
+            )}
           </div>
 
           <div className="form-group">

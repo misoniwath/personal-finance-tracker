@@ -2,15 +2,18 @@ import { GoGoal } from "react-icons/go";
 import "./SavingGoal.css";
 import { useContext } from "react";
 import { SettingsContext } from "../../context/SettingsContext";
+import { TransactionContext } from "../../context/TransactionContext";
 
 export function SavingGoal() {
   const { settings } = useContext(SettingsContext);
+  const { state } = useContext(TransactionContext);
+  const { savingGoals: goals } = state;
 
-  const goals = [
-    { name: "Car", saved: 3500, target: 10000 },
-    { name: "Vacation", saved: 2000, target: 5000 },
-    { name: "Emergency Fund", saved: 1500, target: 3000 },
-  ];
+  // const goals = [
+  //   { name: "Car", saved: 3500, target: 10000 },
+  //   { name: "Vacation", saved: 2000, target: 5000 },
+  //   { name: "Emergency Fund", saved: 1500, target: 3000 },
+  // ];
 
   return (
     <div>

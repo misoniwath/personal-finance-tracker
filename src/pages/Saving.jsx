@@ -1,30 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { GoalProgressCard } from "../components/savings/GoalProgressCard";
 import { AddEditGoalModal } from "../components/savings/AddEditGoalModal";
 import "./Saving.css"; 
+import { TransactionContext } from "../context/TransactionContext";
 
 export function Savings() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // State to hold the goal currently being edited (null if adding a new one)
   const [goalToEdit, setGoalToEdit] = useState(null); 
+  const { state, addSavingGoal, editSavingGoal, deleteSavingGoal } = useContext(TransactionContext);
+  const { savingGoals: goals } = state;
 
-//sample data 
-  const [goals, setGoals] = useState([
-    {
-      id: 1,
-      name: "Car Fund",
-      saved: 3500,
-      target: 10000,
-      dueDate: "2026-12-31",
-    },
-    {
-      id: 2,
-      name: "Vacation",
-      saved: 2000,
-      target: 5000,
-      dueDate: "2025-08-01",
-    },
-  ]);
 
   const openAddModal = () => {
     setGoalToEdit(null); // Clear any goal being edited
@@ -39,24 +25,18 @@ export function Savings() {
 
   const handleDeleteGoal = (goalId) => {
     if (window.confirm("Are you sure you want to delete this goal?")) {
-      setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== goalId));
+      deleteSavingGoal(goalId);
     }
   };
 
   const handleSaveGoal = (goalData) => {
     if (goalData.id) {
       // **Edit Existing Goal**
-      setGoals((prevGoals) =>
-        prevGoals.map((goal) =>
-          goal.id === goalData.id ? { ...goal, ...goalData } : goal
-        )
-      );
+      editSavingGoal(goalData);
     } else {
       // **Add New Goal**
-      setGoals((prevGoals) => [
-        { ...goalData, id: Date.now() }, // Assign unique ID
-        ...prevGoals,
-      ]);
+      const newGoal = { ...goalData, id: Date.now() }; // Assign unique ID
+      addSavingGoal(newGoal);
     }
     setIsModalOpen(false);
     setGoalToEdit(null);

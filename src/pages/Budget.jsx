@@ -1,23 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useMemo } from 'react';
 import { BudgetCard } from '../components/budgets/BudgetCard'; // Corrected path/name
 import { EditBudgetModal } from '../components/budgets/EditBudgetModal';
 import { BudgetOverview } from '../components/budgets/BudgetOverview';
+import { TransactionContext } from '../context/TransactionContext';
 import './Budget.css';
 
 export function Budget() {
-  // Define the budget data just sample data 
-  
-  const [budgets, setBudgets] = useState([
-    { id: 1, category: 'Bills', amount: 400.00, spent: 250.00, color: '#3b82f6', themeColor: '#eff6ff' }, // Blue
-    { id: 2, category: 'Shopping', amount: 250.00, spent: 180.50, color: '#eab308', themeColor: '#fefce8' }, // Yellow
-    { id: 3, category: 'Transportation', amount: 150.00, spent: 155.00, color: '#f97316', themeColor: '#fff7ed' }, // Orange (Slightly overspent for visual test)
-    { id: 4, category: 'Entertainment', amount: 250.00, spent: 75.25, color: '#ec4899', themeColor: '#fdf2f8' }, // Pink
-    { id: 5, category: 'Others', amount: 100.00, spent: 50.00, color: '#64748b', themeColor: '#f1f5f9' }, // Grey
-    { id: 6, category: 'Emergency', amount: 150.00, spent: 0.00, color: '#2ecc71', themeColor: '#ebfdf3' }, // Green
-  ]);
+  const { state, editBudget } = useContext(TransactionContext);
+  const { budgets, transactions } = state;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBudget, setSelectedBudget] = useState(null);
+
+  // Calculate spent amounts from Expense transactions by category
+  const budgetsWithSpent = useMemo(() => {
+    // Get current month's transactions
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+
+    const currentMonthExpenses = transactions.filter(txn => {
+      if (txn.type !== 'Expense') return false;
+      if (!txn.date) return false;
+      const txnDate = new Date(txn.date);
+      return txnDate.getMonth() === currentMonth && txnDate.getFullYear() === currentYear;
+    });
+
+    // Calculate spent by category
+    const spentByCategory = currentMonthExpenses.reduce((acc, txn) => {
+      const category = txn.category || 'Others';
+      acc[category] = (acc[category] || 0) + Number(txn.amount);
+      return acc;
+    }, {});
+
+    // Merge budgets with spent amounts
+    return budgets.map(budget => ({
+      ...budget,
+      spent: spentByCategory[budget.category] || 0
+    }));
+  }, [budgets, transactions]);
 
   const handleEditClick = (budget) => {
     setSelectedBudget(budget);
@@ -27,12 +48,10 @@ export function Budget() {
   const handleSaveBudget = (newAmount) => {
     if (!selectedBudget) return;
     
-    setBudgets(prevBudgets => 
-      prevBudgets.map(b => 
-        // Only update the amount, keeping the mock 'spent' data for visual feedback
-        b.id === selectedBudget.id ? { ...b, amount: newAmount } : b
-      )
-    );
+    editBudget({
+      ...selectedBudget,
+      amount: newAmount
+    });
     setIsModalOpen(false);
     setSelectedBudget(null);
   };
@@ -45,7 +64,7 @@ export function Budget() {
       </div>
 
       <div className="budget-grid">
-        {budgets.map(budget => (
+        {budgetsWithSpent.map(budget => (
           <BudgetCard
             key={budget.id}
             category={budget.category}
@@ -58,7 +77,7 @@ export function Budget() {
       </div>
 
 
-      <BudgetOverview budgets={budgets} />
+      <BudgetOverview budgets={budgetsWithSpent} />
 
       {isModalOpen && selectedBudget && (
         <EditBudgetModal
