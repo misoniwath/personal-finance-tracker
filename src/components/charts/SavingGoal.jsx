@@ -1,7 +1,11 @@
 import { GoGoal } from "react-icons/go";
 import "./SavingGoal.css";
+import { useContext } from "react";
+import { SettingsContext } from "../../context/SettingsContext";
 
 export function SavingGoal() {
+  const { settings } = useContext(SettingsContext);
+
   const goals = [
     { name: "Car", saved: 3500, target: 10000 },
     { name: "Vacation", saved: 2000, target: 5000 },
@@ -23,7 +27,7 @@ export function SavingGoal() {
             <h3>{goal.name}</h3>
 
             <p>
-              ${goal.saved} of ${goal.target} saved
+              {settings.currency}{goal.saved} of {settings.currency}{goal.target} saved
             </p>
 
             <div className="progressBar">

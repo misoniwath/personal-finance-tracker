@@ -1,18 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../../components/savings/SavingGoal.css"; 
-
-
+import { SettingsContext } from "../../context/SettingsContext";
 
 export function GoalProgressCard({ goal, onEdit, onDelete }) {
+  const { settings } = useContext(SettingsContext);
+
   // Calculate progress percentage
   const progress = (goal.saved / goal.target) * 100;
   
-  // Format the due date (kept for structure)
-  const targetDate = new Date(goal.dueDate).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  // Format the due date 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    if (isNaN(date)) return "";
+
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+
+    switch (settings.dateFormat) {
+      case "YYYY/MM/DD":
+        return `${y}/${m}/${d}`;
+      case "DD/MM/YYYY":
+        return `${d}/${m}/${y}`;
+      case "MM/DD/YYYY":
+      default:
+        return `${m}/${d}/${y}`;
+    }
+  };
+
+  const targetDate = formatDate(goal.dueDate);
 
   return (
     <div className="goalItem-card">
@@ -35,7 +51,7 @@ export function GoalProgressCard({ goal, onEdit, onDelete }) {
 
       <p className="goal-info">
         {/* FIX: Removed bolding and .toLocaleString() */}
-        ${goal.saved} of ${goal.target} saved
+        {settings.currency}{goal.saved} of {settings.currency}{goal.target} saved
       </p>
 
       <div className="progressBar">

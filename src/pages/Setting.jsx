@@ -53,8 +53,6 @@ export function Setting() {
     hasSavedRef.current = true; 
     setSettings(tempSettings);  
 
-    localStorage.setItem("appSettings", JSON.stringify(tempSettings));
-
     setSaveMessage({ text: "Settings saved successfully!", type: "success" });
     console.log("Saved settings:", tempSettings);
 

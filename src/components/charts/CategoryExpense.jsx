@@ -1,10 +1,10 @@
-import { PieChart, Pie, Sector, Tooltip, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 import "./CategoryExpense.css";
 import { TransactionContext } from "../../context/TransactionContext";
+import { SettingsContext } from "../../context/SettingsContext";
 import { useContext, useState } from "react";
 
-
-const renderActiveShape = (props) => {
+const createActiveShapeRenderer = (currency) => (props) => {
   const {
     cx,
     cy,
@@ -60,7 +60,9 @@ const renderActiveShape = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#8884d8"
-      >{`$${value.toFixed(2)}`}</text>
+      >
+        {`${currency}${value.toFixed(2)}`}
+      </text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -75,8 +77,8 @@ const renderActiveShape = (props) => {
 export function CustomActiveShapePieChart() {
   const { state } = useContext(TransactionContext);
   const { transactions } = state;
+  const { settings } = useContext(SettingsContext);
   const [activeIndex, setActiveIndex] = useState(0);
-
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
 
@@ -226,7 +228,7 @@ export function CustomActiveShapePieChart() {
         <PieChart>
           <Pie
             activeIndex={activeIndex}
-            activeShape={renderActiveShape}
+            activeShape={createActiveShapeRenderer(settings.currency)}
             data={data}
             cx="50%"
             cy="50%"

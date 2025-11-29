@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import {
   BarChart,
   Bar,
@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "./StackedBarChart.css";
+import { SettingsContext } from "../../context/SettingsContext";
 
 const data = [
   { name: "Jan", income: 4000, expense: 2400 },
@@ -23,19 +24,25 @@ const data = [
 
 export function StackedBarChart() {
   const [filter, setFilter] = useState("all"); 
+  const { settings } = useContext(SettingsContext);
 
   // Filter logic
   const filteredData = useMemo(() => {
     return data.map((item) => {
       if (filter === "income") return { name: item.name, income: item.income };
       if (filter === "expense") return { name: item.name, expense: item.expense };
-      return item; 
+      return item;
     });
   }, [filter]);
 
+  const formatCurrency = (value) => {
+    return `${settings.currency}${value.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+    })}`;
+  };
+
   return (
     <div className="stacked-bar-wrapper" style={{ width: "100%", height: 400 }}>
-      {/* Filter Control */}
       <div style={{ marginBottom: "10px" }}>
         <label>Show: </label>
         <select value={filter} onChange={(e) => setFilter(e.target.value)}>
@@ -53,7 +60,7 @@ export function StackedBarChart() {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip />
+          <Tooltip formatter={(value) => formatCurrency(value)} />
           <Legend />
 
           {(filter === "all" || filter === "expense") && (

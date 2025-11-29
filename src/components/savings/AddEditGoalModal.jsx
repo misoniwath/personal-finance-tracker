@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import "./AddEditGoalModal.css"; // New CSS file
+import { SettingsContext } from "../../context/SettingsContext";
 
 // Helper to get today's date in YYYY-MM-DD format
 const getTodayDate = () => {
@@ -9,6 +10,7 @@ const getTodayDate = () => {
 
 export function AddEditGoalModal({ onClose, onSave, goalToEdit }) {
   const isEdit = !!goalToEdit;
+  const { settings } = useContext(SettingsContext);
 
   // Set initial state from goalToEdit if editing, otherwise use defaults
   const [title, setTitle] = useState(isEdit ? goalToEdit.name : "");
@@ -31,7 +33,7 @@ export function AddEditGoalModal({ onClose, onSave, goalToEdit }) {
       name: title,
       target: parseFloat(targetAmount),
       dueDate,
-      saved: isEdit ? goalToEdit.saved : parseFloat(savedAmount),
+      saved: parseFloat(savedAmount) || 0,
     };
 
     onSave(goalData);
@@ -58,7 +60,7 @@ export function AddEditGoalModal({ onClose, onSave, goalToEdit }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="targetAmount">Target Amount ($)</label>
+            <label htmlFor="targetAmount">Target Amount ({settings.currency})</label>
             <input
               id="targetAmount"
               type="number"
@@ -72,19 +74,21 @@ export function AddEditGoalModal({ onClose, onSave, goalToEdit }) {
           </div>
 
           {!isEdit && ( // Only show "Currently Saved" for new goals
-            <div className="form-group">
-              <label htmlFor="savedAmount">Currently Saved ($)</label>
-              <input
-                id="savedAmount"
-                type="number"
-                min="0.00"
-                step="0.01"
-                placeholder="0.00"
-                value={savedAmount}
-                onChange={(e) => setSavedAmount(e.target.value)}
-              />
-            </div>
+            <></>
           )}
+
+          <div className="form-group">
+            <label htmlFor="savedAmount">Currently Saved ({settings.currency})</label>
+            <input
+              id="savedAmount"
+              type="number"
+              min="0.00"
+              step="0.01"
+              placeholder="0.00"
+              value={savedAmount}
+              onChange={(e) => setSavedAmount(e.target.value)}
+            />
+          </div>
 
           <div className="form-group">
             <label htmlFor="dueDate">Due Date</label>

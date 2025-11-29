@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import '../transactions/AddTransactionModal.css'; // Reusing your existing modal styles
+import React, { useState, useContext } from 'react';
+import '../transactions/AddTransactionModal.css'; // Reusing existing modal styles
+import { SettingsContext } from '../../context/SettingsContext';
 
 export function EditBudgetModal({ category, currentAmount, onClose, onSave }) {
   const [amount, setAmount] = useState(currentAmount);
+  const { settings } = useContext(SettingsContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +18,7 @@ export function EditBudgetModal({ category, currentAmount, onClose, onSave }) {
         
         <form className="transaction-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="budgetAmount">Allocated Amount ($)</label>
+            <label htmlFor="budgetAmount">Allocated Amount ({settings.currency})</label>
             <input
               id="budgetAmount"
               type="number"
