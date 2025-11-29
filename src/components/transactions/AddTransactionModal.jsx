@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { createPortal } from 'react-dom';
 import './AddTransactionModal.css';
 import { TransactionContext } from '../../context/TransactionContext';
 
@@ -13,7 +14,7 @@ const getTodayDate = () => {
 
 export function AddTransactionModal({ onClose, onAddTransaction }) {
   const { state } = useContext(TransactionContext);
-  const { savingGoals } = state;
+  const { savingGoals, budgets } = state;
 
   // State for the form fields
   const [type, setType] = useState('Expense'); // Default to 'Expense'
@@ -29,7 +30,11 @@ export function AddTransactionModal({ onClose, onAddTransaction }) {
     if (type === 'Savings' && savingGoals.length > 0) {
       setCategory(savingGoals[0].name);
     }
-  }, [type, savingGoals]); // This effect runs whenever 'type' or 'savingGoals' changes
+    // If Expense type and there are budgets, set to first budget category
+    if (type === 'Expense' && budgets.length > 0) {
+      setCategory(budgets[0].category);
+    }
+  }, [type, savingGoals, budgets]); // This effect runs whenever 'type', 'savingGoals', or 'budgets' changes
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent page from reloading
@@ -50,7 +55,8 @@ export function AddTransactionModal({ onClose, onAddTransaction }) {
     });
   };
 
-  return (
+  // Use Portal to render modal at document root level to avoid z-index stacking issues
+  return createPortal(
     // The "modal-backdrop" is the grayed-out background
     <div className="modal-backdrop" onClick={onClose}>
       {/* We stop the click from "bubbling" up to the backdrop,
@@ -101,13 +107,28 @@ export function AddTransactionModal({ onClose, onAddTransaction }) {
                   <option value="">No saving goals available</option>
                 )}
               </select>
+            ) : type === 'Expense' ? (
+              <select
+                id="category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                required
+              >
+                {budgets.length > 0 ? (
+                  budgets.map(budget => (
+                    <option key={budget.id} value={budget.category}>{budget.category}</option>
+                  ))
+                ) : (
+                  <option value="">No budget categories available. Please add budgets first.</option>
+                )}
+              </select>
             ) : (
               <input
                 id="category"
                 type="text"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                placeholder={type === 'Income' ? 'e.g., Salary, Freelance' : 'e.g., Food, Transport'}
+                placeholder="e.g., Salary, Freelance"
                 required
               />
             )}
@@ -158,6 +179,7 @@ export function AddTransactionModal({ onClose, onAddTransaction }) {
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

@@ -33,6 +33,17 @@ export function Balance({ type, icon }) {
     displayCount = filteredTransactions.length;
   }
 
+  // Determine transaction text based on count
+  const getTransactionText = () => {
+    if (displayCount === 0) {
+      return "no transaction";
+    } else if (displayCount === 1) {
+      return `1 ${type} transaction`;
+    } else {
+      return `${displayCount} ${type} transactions`;
+    }
+  };
+
   return (
     <div className="balance-card">
       <div className="amount-content">
@@ -44,7 +55,7 @@ export function Balance({ type, icon }) {
           {settings.currency} {displayAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
         </p>
         <p>
-          {displayCount} {type} transactions
+          {getTransactionText()}
         </p>
       </div>
     </div>

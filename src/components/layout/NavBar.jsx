@@ -30,7 +30,7 @@ export function NavBar() {
             className={({ isActive }) =>
               isActive ? "tabLinkActive" : "tabLink"
             }>
-            Budget
+            Budgets
           </NavLink>
         </li>
         <li>
@@ -39,7 +39,7 @@ export function NavBar() {
             className={({ isActive }) =>
               isActive ? "tabLinkActive" : "tabLink"
             }>
-            Saving
+            Savings
           </NavLink>
         </li>
         <li>

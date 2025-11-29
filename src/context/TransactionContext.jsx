@@ -96,11 +96,15 @@ case "DELETE_GOAL":
 
 
 const initialState = {
-    
   balance: 0,
   transactions: [],
+  savingGoals: [],
+  budgets: [],
+};
+
+// Example data for first-time users (only used if no localStorage data exists)
+const exampleData = {
   savingGoals: [
-    // Example goal structure
     {
       id: 1,
       name: "Emergency Fund",
@@ -130,10 +134,13 @@ const STORAGE_KEY = "transactionData";
 
 const getInitialState = () => {
   // Check if window is defined (to avoid issues during SSR)
-  if (typeof window === "undefined") return initialState;
+  if (typeof window === "undefined") return { ...initialState, ...exampleData };
   // Retrieve from localStorage
   const stored = localStorage.getItem(STORAGE_KEY);
-  if (!stored) return initialState;
+  if (!stored) {
+    // First time user - return example data but don't save it yet
+    return { ...initialState, ...exampleData };
+  }
 
   try {
     const parsed = JSON.parse(stored);
@@ -144,7 +151,7 @@ const getInitialState = () => {
     };
   } catch (e) {
     console.error("Failed to parse localStorage state", e);
-    return initialState;
+    return { ...initialState, ...exampleData };
   }
 };
 
@@ -154,11 +161,21 @@ export const TransactionProvider = ({ children }) => {
   const [state, dispatch] = useReducer(transactionReducer, initialState, getInitialState);
   
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch (error) {
-      console.error("Failed to save to localStorage", error);
-    }
+    // Debounce localStorage writes to avoid excessive writes
+    const timeoutId = setTimeout(() => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (error) {
+        if (error.name === 'QuotaExceededError' || error.code === 22) {
+          console.error("localStorage quota exceeded. Please clear some space.");
+          // Could show a user-friendly notification here
+        } else {
+          console.error("Failed to save to localStorage", error);
+        }
+      }
+    }, 300); // Wait 300ms after last state change
+
+    return () => clearTimeout(timeoutId);
   }, [state]);
 
   const addSavingGoal = (goal) => {

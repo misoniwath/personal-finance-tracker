@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import { NavBar } from "./components/layout/NavBar";
 import { Dashboard } from "./pages/Dashboard";
@@ -11,6 +11,57 @@ import { Setting } from "./pages/Setting";
 import { TransactionProvider } from "./context/TransactionContext";
 import { SettingsProvider } from "./context/SettingsContext";
 
+// Wrapper component to handle page transitions
+function PageTransition({ children }) {
+  const location = useLocation();
+  
+  return (
+    <div key={location.pathname} className="page-transition">
+      {children}
+    </div>
+  );
+}
+
+function AppRoutes() {
+  return (
+    <>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={
+          <PageTransition>
+            <Dashboard />
+          </PageTransition>
+        } />
+        <Route path="/transactions" element={
+          <PageTransition>
+            <Transactions />
+          </PageTransition>
+        } />
+        <Route path="/budget" element={
+          <PageTransition>
+            <Budget />
+          </PageTransition>
+        } />
+        <Route path="/savings" element={
+          <PageTransition>
+            <Savings />
+          </PageTransition>
+        } />
+        <Route path="/setting" element={
+          <PageTransition>
+            <Setting />
+          </PageTransition>
+        } />
+        <Route path="*" element={
+          <PageTransition>
+            <NotFound />
+          </PageTransition>
+        } />
+      </Routes>
+    </>
+  );
+}
+
 function App() {
   return (
     <SettingsProvider>
@@ -18,18 +69,7 @@ function App() {
         <div className="container">
           <h1 className="header">Personal Finance Tracker</h1>
           <Router>
-            <NavBar />
-
-            <Routes>
-              {/* Define your routes here */}
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/transactions" element={<Transactions />} />
-              <Route path="/budget" element={<Budget />} />
-              <Route path="/savings" element={<Savings />} />
-              <Route path="/setting" element={<Setting />} />
-
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <AppRoutes />
           </Router>
         </div>
       </TransactionProvider>

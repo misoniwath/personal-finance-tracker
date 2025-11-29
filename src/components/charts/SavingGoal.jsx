@@ -9,11 +9,6 @@ export function SavingGoal() {
   const { state } = useContext(TransactionContext);
   const { savingGoals: goals } = state;
 
-  // const goals = [
-  //   { name: "Car", saved: 3500, target: 10000 },
-  //   { name: "Vacation", saved: 2000, target: 5000 },
-  //   { name: "Emergency Fund", saved: 1500, target: 3000 },
-  // ];
 
   return (
     <div>

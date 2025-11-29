@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { createPortal } from "react-dom";
 import "./AddEditGoalModal.css"; // New CSS file
 import { SettingsContext } from "../../context/SettingsContext";
 
@@ -40,7 +41,8 @@ export function AddEditGoalModal({ onClose, onSave, goalToEdit }) {
     onClose();
   };
 
-  return (
+  // Use Portal to render modal at document root level to avoid z-index stacking issues
+  return createPortal(
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <h2>{isEdit ? "Edit Saving Goal" : "Add New Saving Goal"}</h2>
@@ -112,6 +114,7 @@ export function AddEditGoalModal({ onClose, onSave, goalToEdit }) {
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

@@ -3,7 +3,6 @@
 /* --- Main container for the whole page content --- */
 .transactions-page {
   width: 100%;
-  max-width: 800px; /* Aligns with your overall app container */
   margin-top: 20px;
   background-color: #ffffff; /* White background for the main content area */
   border-radius: 16px;

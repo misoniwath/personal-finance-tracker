@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { createPortal } from 'react-dom';
 import '../transactions/AddTransactionModal.css'; // Reusing existing modal styles
 import { SettingsContext } from '../../context/SettingsContext';
 
@@ -11,7 +12,8 @@ export function EditBudgetModal({ category, currentAmount, onClose, onSave }) {
     onSave(parseFloat(amount));
   };
 
-  return (
+  // Use Portal to render modal at document root level to avoid z-index stacking issues
+  return createPortal(
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <h2>Edit Budget for {category}</h2>
@@ -40,6 +42,7 @@ export function EditBudgetModal({ category, currentAmount, onClose, onSave }) {
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
