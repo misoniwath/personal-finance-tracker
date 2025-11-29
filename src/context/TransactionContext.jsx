@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 
 const transactionReducer = (state, action) => {
   switch (action.type) {
@@ -126,10 +126,41 @@ const initialState = {
   ],
 };
 
+const STORAGE_KEY = "transactionData";
+
+const getInitialState = () => {
+  // Check if window is defined (to avoid issues during SSR)
+  if (typeof window === "undefined") return initialState;
+  // Retrieve from localStorage
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) return initialState;
+
+  try {
+    const parsed = JSON.parse(stored);
+    // Merge to keep any new defaults you might add later
+    return {
+      ...initialState,
+      ...parsed,
+    };
+  } catch (e) {
+    console.error("Failed to parse localStorage state", e);
+    return initialState;
+  }
+};
+
 export const TransactionContext = createContext(initialState);
 
 export const TransactionProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(transactionReducer, initialState);
+  const [state, dispatch] = useReducer(transactionReducer, initialState, getInitialState);
+  
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (error) {
+      console.error("Failed to save to localStorage", error);
+    }
+  }, [state]);
+
   const addSavingGoal = (goal) => {
   dispatch({ type: "ADD_GOAL", payload: goal });
 };
