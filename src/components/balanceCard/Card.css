@@ -56,9 +56,39 @@ body.dark-mode .amount-red {
 }
 
 
+@media (max-width: 768px) {
+  .balance-card {
+    width: calc(50% - 10px);
+    min-width: 180px;
+  }
+}
+
 @media (max-width: 600px) {
   .balance-card {
     width: 100%;
     padding: 16px;
+    max-width: 100%;
+  }
+
+  .amount-green,
+  .amount-red {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .balance-card {
+    padding: 12px;
+    height: auto;
+    min-height: 120px;
+  }
+
+  .amount-green,
+  .amount-red {
+    font-size: 16px;
+  }
+
+  .income-icon {
+    font-size: 20px;
   }
 }

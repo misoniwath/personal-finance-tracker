@@ -68,6 +68,17 @@ body.dark-mode .add-txn-btn:hover {
 }
 
 /* Mobile Responsive */
+@media (max-width: 768px) {
+  .transactions-page {
+    padding: 20px;
+    margin-top: 15px;
+  }
+
+  .transactions-header h2 {
+    font-size: 1.6rem;
+  }
+}
+
 @media (max-width: 600px) {
   .transactions-page {
     padding: 18px;
@@ -87,5 +98,21 @@ body.dark-mode .add-txn-btn:hover {
   .add-txn-btn {
     width: 100%;
     text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .transactions-page {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .transactions-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .add-txn-btn {
+    font-size: 0.85rem;
+    padding: 8px 12px;
   }
 }

@@ -68,3 +68,47 @@ body.dark-mode .add-goal-btn {
 body.dark-mode .add-goal-btn:hover {
   background-color: #1d4ed8;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .savings-page {
+    padding: 20px;
+    margin-top: 15px;
+  }
+
+  .savings-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .savings-page {
+    padding: 15px;
+  }
+
+  .savings-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .savings-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .add-goal-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .savings-page {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .savings-header h2 {
+    font-size: 1.3rem;
+  }
+}

@@ -54,8 +54,53 @@ body.dark-mode .budget-header .subtitle {
 }
 
 /* Responsive adjustment for very small screens */
+@media (max-width: 768px) {
+  .budget-page {
+    padding: 20px;
+    margin-top: 15px;
+  }
+
+  .budget-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .budget-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+  }
+}
+
 @media (max-width: 640px) {
   .budget-page {
-    padding: 20px 15px;
+    padding: 15px;
+  }
+
+  .budget-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .budget-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .budget-page {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .budget-header {
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+  }
+
+  .budget-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .budget-header .subtitle {
+    font-size: 0.85rem;
   }
 }

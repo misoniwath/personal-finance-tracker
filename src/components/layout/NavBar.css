@@ -71,13 +71,54 @@ body.dark-mode .tabLinkActive {
 }
 /* RESPONSIVE MOBILE */
 @media (max-width: 768px) {
+  .navBar {
+    width: 95%;
+    padding: 12px 16px;
+  }
+
   .navLinks {
-    gap: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   
   .tabLink,
   .tabLinkActive {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     padding: 6px 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .navBar {
+    width: 100%;
+    padding: 10px 12px;
+  }
+
+  .navLinks {
+    gap: 8px;
+  }
+
+  .tabLink,
+  .tabLinkActive {
+    font-size: 0.8rem;
+    padding: 6px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navBar {
+    width: 90%;
+    padding: 8px 10px;
+  }
+
+  .navLinks {
+    gap: 6px;
+  }
+
+  .tabLink,
+  .tabLinkActive {
+    font-size: 0.75rem;
+    padding: 5px 6px;
   }
 }
