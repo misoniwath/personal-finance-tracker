@@ -1,6 +1,7 @@
 /* Settings Page CSS*/
 .settings-page {
   width: 100%;
+  max-width: 800px;
   margin-top: 20px;
   background-color: #ffffff;
   border-radius: 16px;
