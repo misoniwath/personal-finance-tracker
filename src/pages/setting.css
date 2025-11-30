@@ -11,9 +11,9 @@
 }
 
 .settings-header {
-  margin-bottom: 10px;    
-  padding-bottom: 5px;    
-  border-bottom: 1px solid #f0f0f0; 
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .settings-header h2 {
@@ -46,11 +46,11 @@
 }
 
 .settings-message.success {
-  color: #2e7d32; 
+  color: #2e7d32;
 }
 
 .settings-message.neutral {
-  color: #555555; 
+  color: #555555;
 }
 
 .settings-action-btn {
@@ -115,5 +115,4 @@ body.dark-mode .reset-btn:hover {
   .settings-header h2 {
     font-size: 1.3rem;
   }
-
 }
