@@ -5,7 +5,7 @@ const transactionReducer = (state, action) => {
     case "ADD_TRANSACTION":
       const newTransaction = action.payload;
       let updatedSavingGoals = state.savingGoals;
-      
+
       // If it's a Savings transaction, update the corresponding goal's saved amount
       if (newTransaction.type === "Savings" && newTransaction.category) {
         updatedSavingGoals = state.savingGoals.map((goal) => {
@@ -18,7 +18,7 @@ const transactionReducer = (state, action) => {
           return goal;
         });
       }
-      
+
       return {
         ...state,
         transactions: [newTransaction, ...state.transactions],
@@ -29,22 +29,29 @@ const transactionReducer = (state, action) => {
       const transactionToDelete = state.transactions.find(
         (t) => t.id === action.payload
       );
-      
+
       let updatedGoalsAfterDelete = state.savingGoals;
-      
+
       // If deleting a Savings transaction, subtract the amount from the goal
-      if (transactionToDelete && transactionToDelete.type === "Savings" && transactionToDelete.category) {
+      if (
+        transactionToDelete &&
+        transactionToDelete.type === "Savings" &&
+        transactionToDelete.category
+      ) {
         updatedGoalsAfterDelete = state.savingGoals.map((goal) => {
           if (goal.name === transactionToDelete.category) {
             return {
               ...goal,
-              saved: Math.max(0, (goal.saved || 0) - Number(transactionToDelete.amount)),
+              saved: Math.max(
+                0,
+                (goal.saved || 0) - Number(transactionToDelete.amount)
+              ),
             };
           }
           return goal;
         });
       }
-      
+
       return {
         ...state,
         transactions: state.transactions.filter(
@@ -53,47 +60,47 @@ const transactionReducer = (state, action) => {
         savingGoals: updatedGoalsAfterDelete,
       };
     case "ADD_GOAL":
-  return {
-    ...state,
-    savingGoals: [action.payload, ...state.savingGoals]
-  };
+      return {
+        ...state,
+        savingGoals: [action.payload, ...state.savingGoals],
+      };
 
-case "EDIT_GOAL":
-  return {
-    ...state,
-    savingGoals: state.savingGoals.map(goal =>
-      goal.id === action.payload.id ? action.payload : goal
-    )
-  };
+    case "EDIT_GOAL":
+      return {
+        ...state,
+        savingGoals: state.savingGoals.map((goal) =>
+          goal.id === action.payload.id ? action.payload : goal
+        ),
+      };
 
-case "DELETE_GOAL":
-  return {
-    ...state,
-    savingGoals: state.savingGoals.filter(goal => goal.id !== action.payload)
-  };
+    case "DELETE_GOAL":
+      return {
+        ...state,
+        savingGoals: state.savingGoals.filter(
+          (goal) => goal.id !== action.payload
+        ),
+      };
     case "ADD_BUDGET":
       return {
         ...state,
-        budgets: [action.payload, ...state.budgets]
+        budgets: [action.payload, ...state.budgets],
       };
     case "EDIT_BUDGET":
       return {
         ...state,
-        budgets: state.budgets.map(budget =>
+        budgets: state.budgets.map((budget) =>
           budget.id === action.payload.id ? action.payload : budget
-        )
+        ),
       };
     case "DELETE_BUDGET":
       return {
         ...state,
-        budgets: state.budgets.filter(budget => budget.id !== action.payload)
+        budgets: state.budgets.filter((budget) => budget.id !== action.payload),
       };
     default:
       return state;
   }
 };
-
-
 
 const initialState = {
   balance: 0,
@@ -104,6 +111,24 @@ const initialState = {
 
 // Example data for first-time users (only used if no localStorage data exists)
 const exampleData = {
+  transactions: [
+    {
+      id: 1,
+      type: "Income",
+      category: "Salary",
+      amount: 3000,
+      date: "2024-06-01",
+      description: "Monthly salary",
+    },
+    {
+      id: 2,
+      type: "Expense",
+      category: "Groceries",
+      amount: 150,
+      date: "2024-06-02",
+      description: "Weekly groceries",
+    },
+  ],
   savingGoals: [
     {
       id: 1,
@@ -118,15 +143,51 @@ const exampleData = {
       saved: 2000,
       target: 3000,
       dueDate: "2024-08-15",
-    }
+    },
   ],
   budgets: [
-    { id: 1, category: 'Bills', amount: 400.00, color: '#3b82f6', themeColor: '#eff6ff' },
-    { id: 2, category: 'Shopping', amount: 250.00, color: '#eab308', themeColor: '#fefce8' },
-    { id: 3, category: 'Transportation', amount: 150.00, color: '#f97316', themeColor: '#fff7ed' },
-    { id: 4, category: 'Entertainment', amount: 250.00, color: '#ec4899', themeColor: '#fdf2f8' },
-    { id: 5, category: 'Others', amount: 100.00, color: '#64748b', themeColor: '#f1f5f9' },
-    { id: 6, category: 'Emergency', amount: 150.00, color: '#2ecc71', themeColor: '#ebfdf3' },
+    {
+      id: 1,
+      category: "Bills",
+      amount: 400.0,
+      color: "#3b82f6",
+      themeColor: "#eff6ff",
+    },
+    {
+      id: 2,
+      category: "Shopping",
+      amount: 250.0,
+      color: "#eab308",
+      themeColor: "#fefce8",
+    },
+    {
+      id: 3,
+      category: "Transportation",
+      amount: 150.0,
+      color: "#f97316",
+      themeColor: "#fff7ed",
+    },
+    {
+      id: 4,
+      category: "Entertainment",
+      amount: 250.0,
+      color: "#ec4899",
+      themeColor: "#fdf2f8",
+    },
+    {
+      id: 5,
+      category: "Others",
+      amount: 100.0,
+      color: "#64748b",
+      themeColor: "#f1f5f9",
+    },
+    {
+      id: 6,
+      category: "Emergency",
+      amount: 150.0,
+      color: "#2ecc71",
+      themeColor: "#ebfdf3",
+    },
   ],
 };
 
@@ -158,16 +219,22 @@ const getInitialState = () => {
 export const TransactionContext = createContext(initialState);
 
 export const TransactionProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(transactionReducer, initialState, getInitialState);
-  
+  const [state, dispatch] = useReducer(
+    transactionReducer,
+    initialState,
+    getInitialState
+  );
+
   useEffect(() => {
     // Debounce localStorage writes to avoid excessive writes
     const timeoutId = setTimeout(() => {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch (error) {
-        if (error.name === 'QuotaExceededError' || error.code === 22) {
-          console.error("localStorage quota exceeded. Please clear some space.");
+        if (error.name === "QuotaExceededError" || error.code === 22) {
+          console.error(
+            "localStorage quota exceeded. Please clear some space."
+          );
           // Could show a user-friendly notification here
         } else {
           console.error("Failed to save to localStorage", error);
@@ -179,16 +246,16 @@ export const TransactionProvider = ({ children }) => {
   }, [state]);
 
   const addSavingGoal = (goal) => {
-  dispatch({ type: "ADD_GOAL", payload: goal });
-};
+    dispatch({ type: "ADD_GOAL", payload: goal });
+  };
 
-const editSavingGoal = (goal) => {
-  dispatch({ type: "EDIT_GOAL", payload: goal });
-};
+  const editSavingGoal = (goal) => {
+    dispatch({ type: "EDIT_GOAL", payload: goal });
+  };
 
-const deleteSavingGoal = (goalId) => {
-  dispatch({ type: "DELETE_GOAL", payload: goalId });
-};
+  const deleteSavingGoal = (goalId) => {
+    dispatch({ type: "DELETE_GOAL", payload: goalId });
+  };
 
   const addBudget = (budget) => {
     dispatch({ type: "ADD_BUDGET", payload: budget });
@@ -203,7 +270,17 @@ const deleteSavingGoal = (goalId) => {
   };
 
   return (
-    <TransactionContext.Provider value={{ state, dispatch, addSavingGoal, editSavingGoal, deleteSavingGoal, addBudget, editBudget, deleteBudget }}>
+    <TransactionContext.Provider
+      value={{
+        state,
+        dispatch,
+        addSavingGoal,
+        editSavingGoal,
+        deleteSavingGoal,
+        addBudget,
+        editBudget,
+        deleteBudget,
+      }}>
       {children}
     </TransactionContext.Provider>
   );
