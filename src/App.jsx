@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import "./App.css";
 import { NavBar } from "./components/layout/NavBar";
 import { Dashboard } from "./pages/Dashboard";
@@ -14,7 +19,7 @@ import { SettingsProvider } from "./context/SettingsContext";
 // Wrapper component to handle page transitions
 function PageTransition({ children }) {
   const location = useLocation();
-  
+
   return (
     <div key={location.pathname} className="page-transition">
       {children}
@@ -27,36 +32,54 @@ function AppRoutes() {
     <>
       <NavBar />
       <Routes>
-        <Route path="/" element={
-          <PageTransition>
-            <Dashboard />
-          </PageTransition>
-        } />
-        <Route path="/transactions" element={
-          <PageTransition>
-            <Transactions />
-          </PageTransition>
-        } />
-        <Route path="/budget" element={
-          <PageTransition>
-            <Budget />
-          </PageTransition>
-        } />
-        <Route path="/savings" element={
-          <PageTransition>
-            <Savings />
-          </PageTransition>
-        } />
-        <Route path="/setting" element={
-          <PageTransition>
-            <Setting />
-          </PageTransition>
-        } />
-        <Route path="*" element={
-          <PageTransition>
-            <NotFound />
-          </PageTransition>
-        } />
+        <Route
+          path="/"
+          element={
+            <PageTransition>
+              <Dashboard />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/transactions"
+          element={
+            <PageTransition>
+              <Transactions />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/budget"
+          element={
+            <PageTransition>
+              <Budget />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/savings"
+          element={
+            <PageTransition>
+              <Savings />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/setting"
+          element={
+            <PageTransition>
+              <Setting />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <PageTransition>
+              <NotFound />
+            </PageTransition>
+          }
+        />
       </Routes>
     </>
   );
