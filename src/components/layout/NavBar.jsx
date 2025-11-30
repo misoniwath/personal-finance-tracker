@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "./Navbar.css";
+import "./NavBar.css";
 
 export function NavBar() {
   return (
@@ -9,6 +9,7 @@ export function NavBar() {
         <li>
           <NavLink
             to="/"
+            end
             className={({ isActive }) =>
               isActive ? "tabLinkActive" : "tabLink"
             }>
